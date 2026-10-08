@@ -22,3 +22,16 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Run fictional example
         run: python -m food_waste_ledger summarize examples/fictional-food-waste.csv --start 2026-10-01 --end 2026-10-07 --demo
+
+  browser:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['22', '24']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Test the browser diary logic
+        run: node --test core.test.js
