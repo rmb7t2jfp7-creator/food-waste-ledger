@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store
+reports/
+data/
+personal-data/
+/demo-report.html
+/demo-report.json
+/my-report.html
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
