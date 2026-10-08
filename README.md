@@ -1,10 +1,32 @@
 # Food Waste Ledger
 
-A small, offline food-waste diary analyzer for households and small kitchens. Record discarded food in a CSV file, then see which items and reasons account for the logged weight. Use the report to choose a practical change to try.
+[Try it in your browser](https://rmb7t2jfp7-creator.github.io/food-waste-ledger/) · [Test results](https://github.com/rmb7t2jfp7-creator/food-waste-ledger/actions)
+
+A small food-waste diary for households and small kitchens, with a phone-friendly browser app and an offline Python CSV analyzer. Record discarded food, see which reasons account for its logged weight, and choose one practical change to try.
 
 **Status: initial working prototype.** This project was created with substantial AI assistance. Its examples are fictional; no real-world trial, adoption, waste reduction, or emissions benefit has been established. It reports recorded mass, not food saved.
 
-## Try the example
+## Use the browser diary
+
+Open `index.html` in a modern browser. The app uses only the included files, with no accounts, dependencies, remote assets, analytics, or data submission. A hosted page fetches only its app files. It works with local files where your browser permits them. If local-file restrictions prevent loading or saving, run the following from this folder and open `http://localhost:8000`:
+
+```sh
+python3 -m http.server 8000
+```
+
+For use on a phone, a GitHub Pages deployment can serve the same static files. Each browser and site address has its own diary; there is no automatic sync. A hosted page needs its assets to load, so keep a local copy if you need dependable offline access.
+
+- Add a food item, date, positive weight, reason, and optional notes. Edit or delete entries using their buttons.
+- Choose **From** and **Through**, then **Apply**. Both dates are included. Totals and the reason chart describe recorded discarded mass only.
+- **Try fictional sample** loads six clearly marked examples totaling **430.5 g**. It asks before replacing an existing diary. Changes in sample mode remain fictional; use **Start fresh** for your own observations.
+- **Back up JSON** saves the whole diary and its personal/fictional status. **Import backup** validates the complete file before replacing anything. The browser accepts up to 1,000 entries, 200-character labels, and 2,000-character notes. Unknown fields, invalid dates/weights, and repeated IDs are rejected.
+- **Export CSV** saves all entries in the Python tool's existing schema, including entries outside the current filter. Fictional exports are marked in their notes. Import label columns as text when opening CSV in a spreadsheet; formulas entered as labels remain literal text in the export and may be interpreted by spreadsheet software.
+
+The browser uses local storage when available. If access is blocked, storage is full, or a saved copy is malformed, the app displays a warning and lets you work in memory. It does not claim unsaved changes are saved. A malformed stored copy is preserved until you explicitly use **Start fresh**. Export a backup before closing if a storage warning is visible. Clearing browser data, private browsing, or changing devices/site addresses can lose access to the diary.
+
+Labels are inserted as text, and chart weights are summed exactly using integer milligrams (`BigInt`). No missing date is converted into a confirmed zero-waste observation.
+
+## Try the Python example
 
 You need **Python 3.9 or newer**. No package installation, account, API key, or internet connection is needed to run the program. On Windows, use `py -3` in place of `python3` if necessary.
 
@@ -61,9 +83,9 @@ Your data stays on your computer while running this tool. Reports contain food l
 
 ## Built and planned
 
-**Built:** CSV validation; inclusive date filtering; exact weight totals; item/reason/date summaries; duplicate warnings; text, JSON, and standalone HTML reports; automated tests; and a GitHub Actions test workflow. The HTML uses no scripts, remote assets, or tracking.
+**Built:** a responsive browser diary with add/edit/delete, inclusive date filtering, exact weight totals, a reason chart, duplicate warnings, explicit fictional sample mode, local saving with visible failure notices, JSON backup/import, and Python-compatible CSV export. The Python CLI includes CSV validation, item/reason/date summaries, and text, JSON, and standalone HTML reports. The static Python HTML reports use no scripts; the interactive browser app uses only local JavaScript. Both use no remote assets or tracking.
 
-**Possible next steps, not implemented:** a simpler entry form, explicit observation/zero-waste day records, and comparisons that account for missing observations. A first real trial and independent feedback are also still needed. These are proposals, not promised outcomes or evidence of impact.
+**Possible next steps, not implemented:** explicit observation/zero-waste day records and comparisons that account for missing observations. A first real trial and independent feedback are also still needed. These are proposals, not promised outcomes or evidence of impact.
 
 ## Development and contributing
 
@@ -71,9 +93,12 @@ Run the tests from the project folder:
 
 ```sh
 python3 -m unittest discover -s tests -v
+node --test core.test.js
 ```
 
-The hosted workflow runs the same suite on pushes and pull requests after publication. Its presence does not mean a hosted run has already passed. See [CONTRIBUTING.md](CONTRIBUTING.md) for bug reports, focused changes, and measurement standards.
+The browser core tests need Node.js 18 or newer; running the browser app itself does not need Node or Python. No package installation is needed. The current local check passed 34 Python tests and 11 Node tests. Browser interaction checks are separate from these data-logic tests.
+
+The hosted workflow runs Python and Node checks on pushes and pull requests after publication. Its presence does not establish that the latest hosted revision has passed; check GitHub Actions for the actual result. See [CONTRIBUTING.md](CONTRIBUTING.md) for bug reports, focused changes, and measurement standards.
 
 ## License
 
