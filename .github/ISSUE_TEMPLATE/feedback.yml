@@ -1,0 +1,61 @@
+name: Usability feedback
+description: Tell us what was confusing, what went wrong, or what would help. No coding required.
+title: "[Feedback]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for describing a specific experience. This is a public issue: use fictional food entries and remove personal names, household details, and private backup files. You do not need to claim any waste reduction or environmental impact.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of feedback is this?
+      options:
+        - Something went wrong
+        - A label or step was hard to understand
+        - An idea that would help my use
+        - An observation from actual use
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: What were you trying to do?
+      description: Describe the task in your own words.
+    validations:
+      required: true
+  - type: textarea
+    id: experience
+    attributes:
+      label: What did you expect, and what happened?
+      description: Separate what you actually saw from what you would like to happen. For an idea, explain the need it would address.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How can someone try the same thing?
+      description: List the steps and use a small fictional example. If you cannot reproduce the behavior, say so. Screenshots are optional; remove private details first.
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: Where did you use it?
+      description: For example, browser and device type, or the Python tool. Do not include identifying device information.
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: Version, release link, or date you used it
+      description: If you do not know the version, the date and whether you used the hosted page or a downloaded copy are helpful.
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else that helps explain your observation?
+      description: Note uncertainty, whether this was fictional sample data or your own use, or a related issue. Actual-use reports are self-reports, not independently verified impact.
+    validations:
+      required: false
