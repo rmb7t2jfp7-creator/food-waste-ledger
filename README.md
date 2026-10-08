@@ -17,14 +17,23 @@ python3 -m http.server 8000
 For use on a phone, a GitHub Pages deployment can serve the same static files. Each browser and site address has its own diary; there is no automatic sync. A hosted page needs its assets to load, so keep a local copy if you need dependable offline access.
 
 - Add a food item, date, positive weight, reason, and optional notes. Edit or delete entries using their buttons.
+- Use **Save daily check-in** to describe how completely you observed that date. **No food discarded** (`zero`) means you report observing the day with no discarded food in your chosen scope and requires no entries for that date. **All discarded food recorded** (`complete`) means you report finishing the day's logging and requires at least one entry. **Only part of the day recorded** (`partial`) means observation or logging was incomplete and can have any number of entries. No check-in means **unknown**, even if some food entries exist. These are your own reports, not independent verification.
 - Choose **From** and **Through**, then **Apply**. Both dates are included. Totals and the reason chart describe recorded discarded mass only.
 - **Try fictional sample** loads six clearly marked examples totaling **430.5 g**. It asks before replacing an existing diary. Changes in sample mode remain fictional; use **Start fresh** for your own observations.
-- **Back up JSON** saves the whole diary and its personal/fictional status. **Import backup** validates the complete file before replacing anything. The browser accepts up to 1,000 entries, 200-character labels, and 2,000-character notes. Unknown fields, invalid dates/weights, and repeated IDs are rejected.
-- **Export CSV** saves all entries in the Python tool's existing schema, including entries outside the current filter. Fictional exports are marked in their notes. Import label columns as text when opening CSV in a spreadsheet; formulas entered as labels remain literal text in the export and may be interpreted by spreadsheet software.
+- **Back up JSON** saves the whole diary, its personal/fictional status, and daily check-ins in schema version 2. **Import backup** validates the complete file before replacing anything. Version-1 backups migrate with their entries preserved and no inferred check-ins. The browser accepts up to 1,000 entries, 200-character labels, and 2,000-character notes. Unknown fields, invalid dates/weights, repeated IDs, and check-ins inconsistent with their day's entries are rejected.
+- **Export food entries** saves all food entries in the Python tool's existing schema, including entries outside the current filter. **Export check-ins** creates a separate CSV that preserves observation dates, statuses, and notes. Use JSON when you want a complete, restorable backup. The legacy entries CSV and Python analyzer cannot represent daily check-ins or distinguish observed zero days. Fictional exports are marked. Import label columns as text when opening CSV in a spreadsheet; formulas entered as labels remain literal text in the export and may be interpreted by spreadsheet software.
 
-The browser uses local storage when available. If access is blocked, storage is full, or a saved copy is malformed, the app displays a warning and lets you work in memory. It does not claim unsaved changes are saved. A malformed stored copy is preserved until you explicitly use **Start fresh**. Export a backup before closing if a storage warning is visible. Clearing browser data, private browsing, or changing devices/site addresses can lose access to the diary.
+The browser uses local storage when available. If access is blocked, storage is full, or a saved copy is malformed, the app displays a warning and lets you work in memory. It does not claim unsaved changes are saved. A malformed stored copy is preserved until you explicitly confirm importing a valid replacement backup or use **Start fresh**. Export a backup before closing if a storage warning is visible. Clearing browser data, private browsing, or changing devices/site addresses can lose access to the diary.
 
 Labels are inserted as text, and chart weights are summed exactly using integer milligrams (`BigInt`). No missing date is converted into a confirmed zero-waste observation.
+
+## Build a useful record without coding
+
+Use the diary for a routine you actually want to understand. Log food during normal disposal, spend about two minutes on an honest daily check-in, and write one actual finding when reviewing the week. If you have no kitchen scale and discarded food, do not invent weights or mark zero: use partial and note that the food was not weighed. Keep dated backups privately. A missed day should stay unknown or partial; do not fill gaps with invented zeros. Dates and records are user-entered and editable, so the diary is self-reported use, not independent verification or a tamper-proof audit.
+
+When something is confusing or broken, open a [plain-language feedback issue](https://github.com/rmb7t2jfp7-creator/food-waste-ledger/issues/new?template=feedback.yml): say what you tried, expected, and saw, using a fictional example. You do not have to change code to provide useful feedback. Publish an update when a real improvement has been made and checked, with a link to the issue it addresses.
+
+The [usage journal guide](docs/USAGE-JOURNAL.md) includes a short daily/weekly routine and empty templates for observations, feedback, and improvement checks. It separates your own reports from independent review and measured impact.
 
 ## Try the Python example
 
@@ -73,7 +82,7 @@ Both date boundaries are included. The program validates the entire CSV, includi
 
 ## Read the report honestly
 
-The report includes total recorded grams, breakdowns by item/reason/date, counts of included and excluded records, and the number of dates with entries. A date with entries is not necessarily a fully observed day. This version cannot record confirmed zero-waste days.
+The Python report includes total recorded grams, breakdowns by item/reason/date, counts of included and excluded records, and the number of dates with entries. A date with entries is not necessarily a fully observed day. The browser's separate daily check-ins can distinguish self-reported zero, complete, and partial observations; the Python report and its entries-only CSV cannot. A complete check-in describes your own reporting coverage, not independent confirmation that nothing was missed.
 
 Mass is summed exactly in integer milligrams and emitted in JSON as decimal gram strings to avoid rounding errors. This precision does not imply that a kitchen scale is accurate to a milligram.
 
@@ -83,9 +92,9 @@ Your data stays on your computer while running this tool. Reports contain food l
 
 ## Built and planned
 
-**Built:** a responsive browser diary with add/edit/delete, inclusive date filtering, exact weight totals, a reason chart, duplicate warnings, explicit fictional sample mode, local saving with visible failure notices, JSON backup/import, and Python-compatible CSV export. The Python CLI includes CSV validation, item/reason/date summaries, and text, JSON, and standalone HTML reports. The static Python HTML reports use no scripts; the interactive browser app uses only local JavaScript. Both use no remote assets or tracking.
+**Built:** a responsive browser diary with add/edit/delete, inclusive date filtering, exact weight totals, a reason chart, duplicate warnings, explicit fictional sample mode, and daily check-ins for self-reported zero/complete/partial coverage. It includes local saving with visible failure notices, schema-version-2 JSON backup/import with version-1 migration, Python-compatible entries CSV export, and a separate check-ins CSV export. The Python CLI includes CSV validation, item/reason/date summaries, and text, JSON, and standalone HTML reports; it still processes entries only. The static Python HTML reports use no scripts; the interactive browser app uses only local JavaScript. Both use no remote assets or tracking.
 
-**Possible next steps, not implemented:** explicit observation/zero-waste day records and comparisons that account for missing observations. A first real trial and independent feedback are also still needed. These are proposals, not promised outcomes or evidence of impact.
+**Possible next steps, not implemented:** comparisons that account for observation coverage and check-in-aware Python reports. A real trial and independent feedback have not been established. These are proposals, not promised outcomes or evidence of impact. See [CHANGELOG.md](CHANGELOG.md) for the changes in version 0.3.0.
 
 ## Development and contributing
 
@@ -96,10 +105,10 @@ python3 -m unittest discover -s tests -v
 node --test core.test.js
 ```
 
-The browser core tests need Node.js 18 or newer; running the browser app itself does not need Node or Python. No package installation is needed. The current local check passed 34 Python tests and 11 Node tests. Browser interaction checks are separate from these data-logic tests.
+The browser core tests need Node.js 18 or newer; running the browser app itself does not need Node or Python. No package installation is needed. Test counts change as the app develops; run these commands or inspect the latest matching GitHub Actions run for current results. Browser interaction checks are separate from these data-logic tests.
 
 The hosted workflow runs Python and Node checks on pushes and pull requests after publication. Its presence does not establish that the latest hosted revision has passed; check GitHub Actions for the actual result. See [CONTRIBUTING.md](CONTRIBUTING.md) for bug reports, focused changes, and measurement standards.
 
 ## License
 
-[MIT](LICENSE). This project is independent of Anthropic and any subscription program.
+[MIT](LICENSE).

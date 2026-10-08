@@ -1,9 +1,13 @@
 {
   "name": "food-waste-ledger",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Offline food-waste diary with exact mass arithmetic",
-  "scripts": { "test": "node --test core.test.js" },
-  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "node --test core.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "license": "MIT"
 }
