@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<title>Food Waste Ledger report</title>
+<style>
+:root { color-scheme: light; font-family: system-ui,sans-serif; color: #18352b; background: #f4f7f2; }
+body { margin: 0 auto; max-width: 58rem; padding: 2rem 1rem; line-height: 1.6; }
+h1 { margin-bottom: .2rem; } h2 { margin-top: 1.8rem; }
+.status { font-weight: 700; } .total { font-size: 2rem; font-weight: 700; }
+.summary { background: white; border: 1px solid #b7c8bc; padding: 1rem 1.4rem; border-radius: .5rem; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; background: white; }
+th,td { padding: .65rem; border: 1px solid #b7c8bc; text-align: left; overflow-wrap: anywhere; }
+thead { background: #e2ece2; } tbody th { font-weight: 400; }
+li { margin-bottom: .5rem; } .warning { padding: 1rem; background: #fff0cc; border-left: 4px solid #775b00; }
+.source { overflow-wrap: anywhere; }
+@media print { body { max-width: none; background: white; } section { break-inside: avoid; } }
+</style></head><body>
+<header><h1>Food Waste Ledger</h1><p class="status">FICTIONAL DEMONSTRATION DATA</p>
+<p>2026-10-01 through 2026-10-07, inclusive</p>
+<p class="source">Input file: fictional-food-waste.csv</p></header>
+<main><div class="summary"><div>Recorded discarded food mass</div><div class="total">430.5 g</div>
+<p>6 entries in this period; 2 input entries outside it.</p>
+<p>5 of 7 calendar days have entries.<br>
+2 days have no entries. <strong>Unlogged does not mean zero waste.</strong></p></div>
+<section><h2>By reason</h2><table><thead><tr><th scope='col'>Label</th><th scope='col'>Recorded grams</th><th scope='col'>Entries</th></tr></thead><tbody><tr><th scope='row'>Overprepared</th><td>200.5</td><td>2</td></tr><tr><th scope='row'>Damaged</th><td>90</td><td>1</td></tr><tr><th scope='row'>Stale</th><td>80</td><td>2</td></tr><tr><th scope='row'>Spoiled</th><td>60</td><td>1</td></tr></tbody></table></section><section><h2>By item</h2><table><thead><tr><th scope='col'>Label</th><th scope='col'>Recorded grams</th><th scope='col'>Entries</th></tr></thead><tbody><tr><th scope='row'>Rice</th><td>200.5</td><td>2</td></tr><tr><th scope='row'>Apple</th><td>90</td><td>1</td></tr><tr><th scope='row'>Bread</th><td>80</td><td>2</td></tr><tr><th scope='row'>Spinach</th><td>60</td><td>1</td></tr></tbody></table></section><section><h2>By date</h2><table><thead><tr><th scope='col'>Label</th><th scope='col'>Recorded grams</th><th scope='col'>Entries</th></tr></thead><tbody><tr><th scope='row'>2026-10-01</th><td>185</td><td>2</td></tr><tr><th scope='row'>2026-10-02</th><td>45</td><td>1</td></tr><tr><th scope='row'>2026-10-04</th><td>75.5</td><td>1</td></tr><tr><th scope='row'>2026-10-06</th><td>90</td><td>1</td></tr><tr><th scope='row'>2026-10-07</th><td>35</td><td>1</td></tr></tbody></table></section>
+<section><h2>How to interpret this report</h2><ul><li>This report describes discarded food mass recorded in the input file. It does not independently verify observations or establish avoided waste, emissions reductions, or environmental benefit.</li><li>Dates without entries are unlogged dates, not evidence of zero food waste. Do not compare periods as reductions unless logging coverage and methods are comparable.</li><li>Mass includes exactly what the recorder weighed. Packaging, liquids, and inedible parts can change results; use a consistent weighing method.</li></ul>
+<p>Labels are grouped exactly as entered after trimming outer whitespace. Repeated identical records are retained and flagged.
+Mass is summed exactly to the supplied precision, up to 0.001 g; this does not imply scale accuracy.</p></section></main>
+<footer><p>Generated locally by Food Waste Ledger. No remote assets, tracking, or emissions estimates.</p></footer>
+</body></html>
